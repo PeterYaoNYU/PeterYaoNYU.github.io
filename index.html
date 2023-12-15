@@ -1,97 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="Hexo"><meta property="og:url" content="http://example.com/"><meta property="og:site_name" content="Hexo"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:author" content="John Doe"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com"},"headline":"Hexo","image":["http://example.com/img/og_image.png"],"author":{"@type":"Person","name":"John Doe"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":{"text":"Yao Yuncheng(Peter)"}}},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-  
-  
-<meta name="generator" content="Hexo 7.0.0"></head>
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-cmu15-213-attack-lab" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/10/cmu15-213-attack-lab/" class="article-date">
-  <time class="dt-published" datetime="2023-07-10T13:48:33.000Z" itemprop="datePublished">2023-07-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/10/cmu15-213-attack-lab/">CMU15-213 Attack Lab</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>It’s been a while since I wrote posts about CMU’s renowned system course 15-213. Last month, I was primarily devoted to my research on SmartNICs and ML for failure detection, and traveling. </p>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Yao Yuncheng(Peter)</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-07-10T13:48:33.000Z" title="7/10/2023, 9:48:33 PM">2023-07-10</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-12-15T13:45:15.400Z" title="12/15/2023, 9:45:15 PM">2023-12-15</time></span><span class="level-item">13 minutes read (About 1891 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/07/10/cmu15-213-attack-lab/">CMU15-213 Attack Lab</a></p><div class="content"><p>It’s been a while since I wrote posts about CMU’s renowned system course 15-213. Last month, I was primarily devoted to my research on SmartNICs and ML for failure detection, and traveling. </p>
 <p>Let’s begin phase by phase.</p>
 <p>Logistics</p>
 <p>The writeup of this lab can be found <a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/attacklab.pdf">here</a> (the CS:APP website). You can <a href="/images/attacklab.pdf">download it from this blog</a> as well.</p>
@@ -111,7 +50,9 @@
 <p><img src="/images/Screenshot-2023-07-10-at-22.05.32-1024x591.png"></p>
 <p><strong>Ok, so the <getbuf> allocated 0x28 bytes, which in decimal is 40 bytes. So we first need to fill the 40 bytes buffer with random input, and then the address of the desired function. Remember that the <getbuf> function fills the stack from the smaller address to the bigger one. So it starts filling from the lower right corner to the upper left corner. However, when the program is reading the return address, it reads from the bigger address to the smaller one (reverse direction). With that being said, the injection string could look something like this:</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">c0 17 40 00</span><br><span class="line">00 00 00 00</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p><img src="/images/Screenshot-2023-07-10-at-22.14.35-1024x591.png"></p>
 <p>Try it, works as expected.</p>
 <p><strong>Phase 2: Code injection</strong></p>
@@ -124,7 +65,9 @@
 <p>The basic idea is that: first we need to change the return address after the <getbuf> procedure to somewhere on the stack (in this question, stack execution protection is disabled), that somewhere should be the place where we input our malicious code, which is the 40 bytes buffer of the <getbuf> function. For convenience, I will just set the return address to the bottom of the stack when the <getbuf> is called, namely the start of the 40 bytes buffer. </p>
 <p>Then we need to think about what code we would like to put in the stack we were given. I propose something like this, in assembly of course:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov $0x5561dc98, %rdi</span><br><span class="line">pushq $0x000000004017ec</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p>The first line puts the cookie into the register that holds the parameter value for procedure <touch2>. The second line push a return address to the stack, and pushq command will also automatically decrement the stack pointer by 8, so that when we execute ret command in the third line, the stack pointer will increment by 8 automatically, and pop the return address out. This 0x4017ec address points to the <touch2> procedure, which can be found out here:</p>
 <p><img src="/images/Screenshot-2023-07-11-at-11.36.16-1024x591.png"></p>
 <p>The last piece of this puzzle is, what should the return address of the <getbuf> function be changed to? We want to change it to the beginning of our malicious injected code, which we inject starting at the lowest address of the 40 byte buffer. The answer is self-evident, we need to change the return address to the lowest address of the buffer, and the code will be then executed from bottom up. </p>
@@ -157,11 +100,15 @@
 <p><img src="/images/Screenshot-2023-07-16-at-17.15.42-1024x653.png"></p>
 <p>First, try this input, then check how much of the 11111…1111 buffer space is changed by hexmatch in GDB. The return address is changed by buffer overflow to <touch3> so that we can observe the behavior of <hexmatch>. </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># convert hex to raw hex</span><br><span class="line">./hex2raw &lt; p3\_test.txt &gt; p3\_test\_raw.txt</span><br><span class="line"># GDB COMMAND</span><br><span class="line">gdb --args ./ctarget -q</span><br><span class="line">b test</span><br><span class="line">run -q &lt; p3\_test\_raw.txt</span><br><span class="line"># inspect the first 80 bytes starting at a certain address, in hex</span><br><span class="line">x/20x 0x5561dc78</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p><img src="/images/Screenshot-2023-07-16-at-17.27.08-1024x653.png"></p>
 <p>now that we are in <touch3>, make a breakpoint before and after <hexmatch> to see how much of the buffer has been changed. </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) b \*0x040190b</span><br><span class="line">(gdb) b \*0x0401916</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p><img src="/images/Screenshot-2023-07-16-at-17.28.52-1024x177.png">this is the buffer layout before calling <hexmatch></p>
 <p><img src="/images/Screenshot-2023-07-16-at-17.30.37-1024x185.png">this is the buffer layout after calling <hexmatch></p>
 <p>we can see that all 40 bytes have been overwritten. So we have to buffer overflow more, and store the address of the ASCII code at someplace after. Address starting at 0x5561dca8 seems unchanged after calling <hexmatch>, and is thus a valid candidate. </p>
@@ -172,7 +119,9 @@
 <p>We put the code at the beginning of the buffer, so the return address of <getbuf> should also be changed to 0x5561dc78</p>
 <p>Putting everything together, here is the injection code:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">48 c7 c7 a8</span><br><span class="line">dc 61 55 68</span><br><span class="line">fa 18 40 00</span><br><span class="line">c3 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">00 00 00 00</span><br><span class="line">78 dc 61 55</span><br><span class="line">00 00 00 00</span><br><span class="line">35 39 62 39</span><br><span class="line">39 37 66 61</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p><img src="/images/Screenshot-2023-07-16-at-17.40.17-1024x653.png"></p>
 <p>test it, it is indeed the answer. </p>
 <p><img src="/images/Screenshot-2023-07-16-at-18.10.25-1024x653.png"></p>
@@ -197,55 +146,21 @@
 <p>We can only use the first 8 gadgets, from the &lt;start_farm&gt; to the &lt;mid_farm&gt;. Apparently, we need a popq to pop the cookie to a certain register, so we are looking for anything from 58 to 5f.</p>
 <p>You can choose either &lt;getval_280&gt; or &lt;addval_219&gt;, which contains </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">58 90 c3 </span><br><span class="line">// popq %rax</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p>Note that there is no 5f in the code snippet farm, so we cannot pop directly to %rdi. We can however, later move the content from %rax to %rdi. So we are looking for 48 89 c7. &lt;setval_426&gt; provide the segment for that. </p>
 <p>I choose &lt;getval_280&gt; and &lt;setval_426&gt;, the first at 0x4019cc, and the latter at 0x4019c5. The <touch2> function is at address 0x4017ec. Putting everything together, we now want the stack to have the following layout, the code bottom being the top of the stack:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00</span><br><span class="line">00 40 17 ec // touch2 address</span><br><span class="line">00 00 00 00</span><br><span class="line">00 40 19 c5 // mov from %rax to %rdi</span><br><span class="line">00 00 00 00</span><br><span class="line">59 b9 97 fa // my cookie</span><br><span class="line">00 00 00 00</span><br><span class="line">00 40 19 cc // pop to %rax</span><br><span class="line">...... 40 bytes random (the original &lt;getbuf&gt; buffer)</span><br></pre></td></tr></table></figure>
-<p>Zsh</p>
+
+
+
 <p>in order to achieve that layout, we want out input to be </p>
 <p><img src="/images/Screenshot-2023-07-16-at-19.41.01-1024x653.png"></p>
 <p><img src="/images/Screenshot-2023-07-16-at-19.41.27-1024x653.png"></p>
 <p>Test it out, and it is indeed the answer. </p>
 <p><strong>Phase5</strong> </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/10/cmu15-213-attack-lab/" data-id="clq6muyg80001agc30xs695rq" data-title="CMU15-213 Attack Lab" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-bomb-lab-cmu-15-213" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/05/18/bomb-lab-cmu-15-213/" class="article-date">
-  <time class="dt-published" datetime="2023-05-18T08:34:12.000Z" itemprop="datePublished">2023-05-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/05/18/bomb-lab-cmu-15-213/">Bomb Lab CMU 15-213</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>May 18th, 2023. </p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-05-18T08:34:12.000Z" title="5/18/2023, 4:34:12 PM">2023-05-18</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-12-15T13:03:00.588Z" title="12/15/2023, 9:03:00 PM">2023-12-15</time></span><span class="level-item">29 minutes read (About 4338 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/05/18/bomb-lab-cmu-15-213/">Bomb Lab CMU 15-213</a></p><div class="content"><p>May 18th, 2023. </p>
 <p>I have just finished all my final yesterday. Farewell my sophomore year! After playing the new <em>Zelda: Tears of the Kingdom</em> for the whole evening, which was released just a few days ago (and without any doubt, the best game ever made in human history), I decided to do something a little bit more meaningful and fulfilling. </p>
 <p>I started on the lab assignments of 15-213 when I was still a very naive and stupid freshman (I’ve got to admit that I am kind of stupid in the freshman year…). Back then I don’t know anything about computer systems. It is a terrible terrible mistake to start Intro to Computer Sys when you don’t have a clue what C and POSIX and OS is. The labs will just gradually suck out the false confidence that you got from the undemanding NYU curriculum and the all too high level Python. Apparently, this course is by no means, as its name suggests, an intro one. We’ve got to learn to respect CMU. </p>
 <p>After being through some pretty traumatic experience at Operating Systems and Distributed Systems classes, I decided that I am tortured enough to begin again on the lab assignment of CS:APP. Being a seasoned and perhaps too experienced C programmer, I think I can easily handle an introductory undergraduate course on Systems. (Or can I? Let’s find out!)</p>
@@ -411,45 +326,7 @@
 <p>Test it, and indeed, this is the result. We have defused the bomb successfully!!!</p>
 <p><em><strong>This concludes this lab assignment.</strong></em></p>
 <hr>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/18/bomb-lab-cmu-15-213/" data-id="clq6muyg20000agc3g2tq0rsb" data-title="Bomb Lab CMU 15-213" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/" class="article-date">
-  <time class="dt-published" datetime="2023-02-17T12:30:20.000Z" itemprop="datePublished">2023-02-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/">Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="http://yaoyuncheng.site/wp-content/uploads/2023/02/client-server-issues-Akkoyunlu-et-al-75.pdf">client-server-issues-Akkoyunlu-et-al-75</a><a target="_blank" rel="noopener" href="http://yaoyuncheng.site/wp-content/uploads/2023/02/client-server-issues-Akkoyunlu-et-al-75.pdf">Download</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-02-17T12:30:20.000Z" title="2/17/2023, 8:30:20 PM">2023-02-17</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-12-15T12:55:09.296Z" title="12/15/2023, 8:55:09 PM">2023-12-15</time></span><span class="level-item">8 minutes read (About 1209 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/">Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications</a></p><div class="content"><p><a target="_blank" rel="noopener" href="http://yaoyuncheng.site/wp-content/uploads/2023/02/client-server-issues-Akkoyunlu-et-al-75.pdf">client-server-issues-Akkoyunlu-et-al-75</a><a target="_blank" rel="noopener" href="http://yaoyuncheng.site/wp-content/uploads/2023/02/client-server-issues-Akkoyunlu-et-al-75.pdf">Download</a></p>
 <p>Name: Yuncheng Yao (Peter)</p>
 <p>Reference: E. A. Akkoyunlu, K. Ekanadham, and R. V. Huber. 1975. Some constraints and tradeoffs in the design of network communications. In Proceedings of the fifth ACM symposium on Operating systems principles (SOSP ‘75). Association for Computing Machinery, New York, NY, USA, 67–74. DOI:<a target="_blank" rel="noopener" href="https://doi.org/10.1145/800213.806523">https://doi.org/10.1145/800213.806523</a></p>
 <hr>
@@ -512,153 +389,49 @@
 <li><p>The time-out feature is necessary in the CS model, for reasons aforementioned, but the exact time-out window could potentially be optimized by adding a failure detection layer. By dynamically calculating the estimated arrival time, we may be able to improve the completeness and accuracy of the time-out feature.</p>
 </li>
 </ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/" data-id="clq6muyga0003agc3e4zjej7y" data-title="Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-higher-order-functions" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/02/14/higher-order-functions/" class="article-date">
-  <time class="dt-published" datetime="2023-02-14T07:07:51.000Z" itemprop="datePublished">2023-02-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/02/14/higher-order-functions/">Higher-order Functions</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>A higher order function is technically any function that takes another function as an argument.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/02/14/higher-order-functions/" data-id="clq6muyga0002agc3fm9r9jhl" data-title="Higher-order Functions" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/07/10/cmu15-213-attack-lab/">CMU15-213 Attack Lab</a>
-          </li>
-        
-          <li>
-            <a href="/2023/05/18/bomb-lab-cmu-15-213/">Bomb Lab CMU 15-213</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/">Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications</a>
-          </li>
-        
-          <li>
-            <a href="/2023/02/14/higher-order-functions/">Higher-order Functions</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-02-14T07:07:51.000Z" title="2/14/2023, 3:07:51 PM">2023-02-14</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-12-15T12:55:09.294Z" title="12/15/2023, 8:55:09 PM">2023-12-15</time></span><span class="level-item">a few seconds read (About 15 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/14/higher-order-functions/">Higher-order Functions</a></p><div class="content"><p>A higher order function is technically any function that takes another function as an argument.</p>
+</div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/avatar.jpg" alt="Yao Yuncheng (Peter)"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Yao Yuncheng (Peter)</p><p class="is-size-6 is-block">yy4108@nyu.edu</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shanghai</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">0</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PeterYaoNYU" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PeterYaoNYU"><i class="fab fa-github"></i></a></div></div></div><!--!--><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-07-10T13:48:33.000Z">2023-07-10</time></p><p class="title"><a href="/2023/07/10/cmu15-213-attack-lab/">CMU15-213 Attack Lab</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-18T08:34:12.000Z">2023-05-18</time></p><p class="title"><a href="/2023/05/18/bomb-lab-cmu-15-213/">Bomb Lab CMU 15-213</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-02-17T12:30:20.000Z">2023-02-17</time></p><p class="title"><a href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/">Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-02-14T07:07:51.000Z">2023-02-14</time></p><p class="title"><a href="/2023/02/14/higher-order-functions/">Higher-order Functions</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/"><span class="level-start"><span class="level-item">2023</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><!--!--></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Yao Yuncheng(Peter)</a><p class="is-size-7"><span>&copy; 2023 John Doe</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2023</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PeterYaoNYU"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
