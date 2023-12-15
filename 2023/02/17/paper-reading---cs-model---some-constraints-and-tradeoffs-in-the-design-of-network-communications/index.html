@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="client-server-issues-Akkoyunlu-et-al-75Download Name: Yuncheng Yao (Peter) Reference: E. A. Akkoyunlu, K. Ekanadham, and R. V. Huber. 1975. Some constraints and tradeoffs in the design of network comm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications">
+<meta property="og:url" content="http://example.com/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="client-server-issues-Akkoyunlu-et-al-75Download Name: Yuncheng Yao (Peter) Reference: E. A. Akkoyunlu, K. Ekanadham, and R. V. Huber. 1975. Some constraints and tradeoffs in the design of network comm">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-17T12:30:20.000Z">
+<meta property="article:modified_time" content="2023-12-15T12:55:09.296Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/" class="article-date">
+  <time class="dt-published" datetime="2023-02-17T12:30:20.000Z" itemprop="datePublished">2023-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="http://yaoyuncheng.site/wp-content/uploads/2023/02/client-server-issues-Akkoyunlu-et-al-75.pdf">client-server-issues-Akkoyunlu-et-al-75</a><a target="_blank" rel="noopener" href="http://yaoyuncheng.site/wp-content/uploads/2023/02/client-server-issues-Akkoyunlu-et-al-75.pdf">Download</a></p>
+<p>Name: Yuncheng Yao (Peter)</p>
+<p>Reference: E. A. Akkoyunlu, K. Ekanadham, and R. V. Huber. 1975. Some constraints and tradeoffs in the design of network communications. In Proceedings of the fifth ACM symposium on Operating systems principles (SOSP ‘75). Association for Computing Machinery, New York, NY, USA, 67–74. DOI:<a target="_blank" rel="noopener" href="https://doi.org/10.1145/800213.806523">https://doi.org/10.1145/800213.806523</a></p>
+<hr>
+<p>The challenge that the authors address is how to incorporate many desirable but sometimes conflicting features into a client server model, by making necessary tradeoffs to solve the incompatibility. </p>
+<p>Some reasonable assumptions about the system are made. The clients and servers communicate via messages and ports; the most complex failure model is the timing failure, and failures may be silent; the system is asynchronous in terms of communication and computation; there is no mysterious system buffering as in MPI; failure intervals are long compared to the transaction time. </p>
+<p>The author also ruled out some unreasonable assumptions. It is not realistic to assume that 1)the network is reliable; 2)the topology is connected all the time; and 3) failures can be detected immediately.</p>
+<p>The features that the authors want to include in theirs systems are:</p>
+<ol start="2">
+<li><p>Status. Because status information cannot be provided elsewhere if it is not provided in the IPCM;</p>
+</li>
+<li><p>Time-out. Because we don’t want to block the whole process forever just because of a single undelivered message;</p>
+</li>
+<li><p>Insertion property. This provides maximum abstraction to the users by supplying them with limited communication primitives;</p>
+</li>
+<li><p>Well known ports. It exposes frequently used resources like HTTP, compiling, FTP… ;</p>
+</li>
+<li><p>Partial transfer to deal with different buffer sizes;</p>
+</li>
+</ol>
+<p>The authors identify some inevitable incompatibility among those desirable features and proposed possible solutions to have them all by making acceptable compromises.</p>
+<ol start="2">
+<li><p>The conflict between the incomplete connectedness of the topology (eg. network partition) and providing complete status. Accurate status messages may be blocked by a partition.</p>
+</li>
+<li><p>The conflict between time-outs and complete status. Even with the strong assumption that the network is reliable, because of the asynchronous nature of our communication model, a status message may not arrive before the time-out, and we cannot be sure whether the message got delivered and accepted (but is still being processed by the server), got delivered and rejected, or that the status information is sent but not yet received.</p>
+</li>
+<li><p>The conflict between time-outs and insertion property. Similar to Conflict 2, it is impossible to be sure about the exact outcome of the transaction with time-outs, a situation that cannot happen had these two processes been directly connected on a centralized system, and this uncertainty violates the insertion property.</p>
+</li>
+</ol>
+<p>The solution to the first 3 conflicts is to provide the same ambiguous status information in many situations where we are not certain about the exact correct status . Whether the message is never delivered successfully, or the delivery to the server is complete but status is not sent in time, or that the status is sent but not received by the client in time, it is the same ambiguous status provided to the client. The tradeoff that we are making is that we are unable to provide complete status, but we will be able to provide some status.</p>
+<ol start="5">
+<li>The conflict between the strong insertion property and the varying buffer sizes of different processes. Enforcing a universal buffer size is restricting, and violates insertion property by exposing communication details.</li>
+</ol>
+<p>Solution: Allow partial transfers.</p>
+<ol start="6">
+<li>The conflict among partial transfer, time-outs and insertion property. The RECEIVE request may time out before a complete message is transferred, and by telling the server process about the data existing in the buffer, we expose ugly communication details and violate insertion property; if we don’t tell the server process about the incomplete message, the message gets lost.</li>
+</ol>
+<p>Solution: Adopt a weaker insertion property and allow buffer sizes to be exposed when necessary.</p>
+<ol start="7">
+<li>The conflict between well-known ports, partial transfer and time-outs. Time-outs are necessary here, otherwise the well-known port may be blocked by a super slow message. New messages arriving after the original SEND request has timed out raises data consistency issues.</li>
+</ol>
+<p>Solution: Ban partial transfer with well-known ports. Longer messages sent to the well-known process must use separate connections which are set up after the initial short message sent to the well-known port, which potentially use a layer of buffer processes, or communicate via another port.</p>
+<ol start="8">
+<li>The conflict between many ports processes and partial transfers. With or without a separate buffer for each port, once a complete message arrives while there is an incomplete one, the server process has to deal with the incomplete message by buffering it internally, which violates the insertion property.</li>
+</ol>
+<p>Solution: add a layer of buffer processes, which sends only complete messages to the server.</p>
+<p>The paper also proves that it is impossible for the client and server to know that they are in mutual agreement about the status of the original message from client to the server. The implication is that it is not necessary to send status information more than once, because no matter how many times you send the status and ACK of the status, you can never be sure that you are in mutual agreement with each other.</p>
+<p><strong>Strengths of the paper:</strong></p>
+<ol start="2">
+<li><p>The insertion property is strict but helpful. By exposing limited and general primitives to the application layer, we can easily insert service layers on the communication path without interfering with the users. We have seen a beautiful layer of buffer processes, which spare the service process the trouble to provide internal buffering for partial transfers. One can further imagine that, when the load is big, we may add a layer of load-balancing dispatcher processes, without interfering with the client or the server. This powerful insulation and abstraction allows for maximum forward compatibility.</p>
+</li>
+<li><p>The use of concurrent programming to increase the throughput. The design of buffer processes allows a service process to use the RECEIVE primitive concurrently. This is a huge improvement in terms of throughput, now that a service process doesn’t have to receive messages one by one. This is concurrency on the communication layer, and with the potential implementation of concurrency within the service process itself, the overall efficiency of this CS model is good.</p>
+</li>
+</ol>
+<p><strong>Weaknesses of the paper:</strong></p>
+<ol start="2">
+<li><p>If the clients keep sending requests when the server is already busy, the service process may well run out of buffer space, and data may be lost. Some traffic control may be desirable to ensure that there is enough capacity on the server side.</p>
+</li>
+<li><p>The overhead induced by dynamic creation of buffer processes is costly. It may be an optimization to use a dynamic process pool, or even a thread pool for buffering partial transfers, which reduces the overhead of process creation, and provides a cap for server capacity.</p>
+</li>
+<li><p>The time-out feature is necessary in the CS model, for reasons aforementioned, but the exact time-out window could potentially be optimized by adding a failure detection layer. By dynamically calculating the estimated arrival time, we may be able to improve the completeness and accuracy of the time-out feature.</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/" data-id="clq6muyga0003agc3e4zjej7y" data-title="Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/05/18/bomb-lab-cmu-15-213/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Bomb Lab CMU 15-213
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/02/14/higher-order-functions/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Higher-order Functions</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/12/15/untitled-post-20231215204346/">None</a>
+          </li>
+        
+          <li>
+            <a href="/2023/12/15/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/10/cmu15-213-attack-lab/">CMU15-213 Attack Lab</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/18/bomb-lab-cmu-15-213/">Bomb Lab CMU 15-213</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/17/paper-reading---cs-model---some-constraints-and-tradeoffs-in-the-design-of-network-communications/">Paper Reading - CS Model - Some constraints and tradeoffs in the design of network communications</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
