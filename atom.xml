@@ -6,7 +6,7 @@
   <link href="http://peteryaonyu.github.io/atom.xml" rel="self"/>
   
   <link href="http://peteryaonyu.github.io/"/>
-  <updated>2024-04-12T18:15:16.132Z</updated>
+  <updated>2024-04-18T01:16:00.204Z</updated>
   <id>http://peteryaonyu.github.io/</id>
   
   <author>
@@ -15,6 +15,208 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Compiler Construction] Control Flow Graph, Liveness Analysis, Dataflow Analysis and Interference Graph, Implemented in OCaml</title>
+    <link href="http://peteryaonyu.github.io/2024/04/17/Compiler-Construction-Control-Flow-Graph-Liveness-Analysis-Dataflow-Analysis-and-Interference-Graph-Implemented-in-OCaml/"/>
+    <id>http://peteryaonyu.github.io/2024/04/17/Compiler-Construction-Control-Flow-Graph-Liveness-Analysis-Dataflow-Analysis-and-Interference-Graph-Implemented-in-OCaml/</id>
+    <published>2024-04-17T23:53:06.000Z</published>
+    <updated>2024-04-18T01:16:00.204Z</updated>
+    
+    <content type="html"><![CDATA[<p>I am super busy, but I want to spend some time talking about how to write a compiler in ocaml that has liveness analysis, and can generate interference graph from CFG and liveness analysis, which is fundamental to doing correct, if not efficient, register allocation. </p><style>                /* css part */                .gr-card {                    --gr-header-width-proportion: 10%;                    --gr-footer-width-proportion: 10%;                    --gr-content-width-proportion: 80%;                    --gr-header-min-width: 80px;                    --gr-footer-min-width: 80px;                    --gr-card-element-margin: 6px 10px 6px 10px; /* header content footer*/                    display: flex;                    background-color: #fff;                    border-radius: 6px;                    overflow: hidden;                    box-shadow: 0px 4px 6px rgba(0, 0, 0, .12);                    margin-bottom: 20px;                    vertical-align: middle;                    position: relative;                }                .gr-header {                    width: var(--gr-header-width-proportion);                    min-width: var(--gr-header-min-width);                    margin: var(--gr-card-element-margin);                    background-color: #fff;                    /* background-color: blueviolet; */                }                .gr-header img {                    width: 80px;                    height: 80px;                    position: relative;                    top: 50%;                    left: 50%;                    transform: translate(-50%,-50%);                    object-fit: cover;                    border-radius: 50%;                    margin: 0px;                }                .gr-content {                    width: var(--gr-content-width-proportion);                    margin: var(--gr-card-element-margin);                    background-color: #fff;                    text-align: left;                }                #gr-github-icon {                    font-size: 1.3rem;                }                .gr-fullname {                    display: -webkit-box;                    -webkit-box-orient: vertical;                    -webkit-line-clamp: 1;                    overflow: hidden;                }                .gr-fullname p {                    line-height: 2rem;                    margin: 10px 0px 0px 0px;                    padding: 0;                    font-size: .83rem;                    font-weight: bolder;                }                .gr-description {                    font-size: .8rem;                    line-height: 1.6rem;                    display: -webkit-box;                    -webkit-box-orient: vertical;                    -webkit-line-clamp: 1;                    overflow: hidden;                }                .gr-footer {                    width: var(--gr-footer-width-proportion);                    min-width: var(--gr-footer-min-width);                    margin: var(--gr-card-element-margin);                    display: flex;                    /* background-color: aqua; */                    background-color: #fff;                    position: relative;                    padding: 0px;                }                .gr-language-star {                    margin: auto auto 22px auto;                    text-align: center;                    opacity: 1;                }                .gr-language {                    font-size: .8rem;                    font-weight: 600;                    line-height: 2.2rem;                    color: #2070d3;                }                #gr-star-icon {                    font-size: .8rem;                    display: inherit;                }                .gr-card-toolbar{                    display:flex;                    width: 100%;                    height: 100%;                    position: absolute;                    opacity: 0;                    animation: fade-out;                    animation-duration: .4s;                    z-index: -1;                    /* background-color: #2070d3; */                }                .gr-repo-link {                    margin: auto;                }                #gr-repo-link-icon {                    font-size: 16px;                }                /* animation part */                @keyframes fade-in {                    0% {opacity: 0;}/*初始状态 透明度为0*/                    100% {opacity: 1;}/*结束状态 透明度为1*/                }                @keyframes fade-out {                    0% {opacity: 1;}/*初始状态 透明度为0*/                    100% {opacity: 0;}/*结束状态 透明度为1*/                }                .gr-card:hover .gr-language-star{                    opacity: 0;                    animation: fade-out;                    animation-duration: .3s;                }                .gr-card:hover .gr-card-toolbar{                    opacity: 1;                    animation: fade-in;                    animation-duration: .6s;                    z-index: 1;                }                </style>                <div class="gr-card">                    <div class="gr-header">                        <img src="https://avatars.githubusercontent.com/u/93311390?v=4" alt="">                    </div>                    <div class="gr-content">                        <div class="gr-fullname">                            <p><i class="fab fa-github fa-lg" aria-hidden="true" id="gr-github-icon"></i> PeterYaoNYU/CompilerInOCaml</p>                        </div>                        <div class="gr-description">                            A compiler for a ML-ish Languange, with a ML->Scheme->C->CFG->MIPS Pipeline, Register Allocation and Garbage Collection.                        </div>                    </div>                    <div class="gr-footer">                        <div class="gr-language-star">                            <span class="gr-language">OCaml</span>                            <i class="far fa-star" aria-hidden="true" id='gr-star-icon'> 0</i>                        </div>                        <div class="gr-card-toolbar">                            <div class="gr-repo-link">                                <a href="https://github.com/PeterYaoNYU/CompilerInOCaml" target="_blank" rel="noopener noreferrer"                                    title="Open in a new TAB">                                    <i class="fas fa-external-link-square-alt fa-lg" aria-hidden="true" style="color: black;" id="gr-repo-link-icon"></i>                                </a>                            </div>                        </div>                    </div>                </div><p>The Code can be found under the folder ps7, if not restructured after the writing of this post. </p><p>This is part of the NYU graduate level capstone project, with Prof. Joseph Tassarotti. </p><span id="more"></span><p>An interference graph is a prerequisite for building correct register allocation in a compiler. An interference graph relies on correct liveness analysis, and liveness is dependent on control flow graph, or cfg. CFG is a directed graph between blocks of code. The granularity of the block is adjustable, but to build efficient compiler that converges fast enough, one common optimization is to collapse codes together, with the last line of code in the cfg block being jump, return or if. </p><h2 id="CFG-AST"><a href="#CFG-AST" class="headerlink" title="CFG AST"></a>CFG AST</h2><p>We have an ast very similar to assembly, but has an infinite number of registers to store temporaries. </p><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> operand = <span class="type">Int</span> <span class="keyword">of</span> <span class="built_in">int</span> | <span class="type">Var</span> <span class="keyword">of</span> var | <span class="type">Lab</span> <span class="keyword">of</span> label | <span class="type">Reg</span> <span class="keyword">of</span> <span class="type">Mips</span>.reg</span><br><span class="line"><span class="keyword">let</span> sp = <span class="type">Reg</span>(<span class="type">Mips</span>.<span class="type">R29</span>)</span><br><span class="line"><span class="keyword">let</span> fp = <span class="type">Reg</span>(<span class="type">Mips</span>.<span class="type">R30</span>)</span><br><span class="line"><span class="keyword">let</span> ra = <span class="type">Reg</span>(<span class="type">Mips</span>.<span class="type">R31</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> compareop = <span class="type">Eq</span> | <span class="type">Neq</span> | <span class="type">Lt</span> | <span class="type">Lte</span> | <span class="type">Gt</span> | <span class="type">Gte</span></span><br><span class="line"><span class="keyword">type</span> arithop = <span class="type">Plus</span> | <span class="type">Minus</span> | <span class="type">Times</span> | <span class="type">Div</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">(* essentially, a subset of the MIPS instructions but with</span></span><br><span class="line"><span class="comment"> * support for using temps as operands. *)</span></span><br><span class="line"><span class="keyword">type</span> inst = </span><br><span class="line">  <span class="type">Label</span> <span class="keyword">of</span> label</span><br><span class="line">| <span class="type">Move</span> <span class="keyword">of</span> operand * operand                     <span class="comment">(* x := y *)</span></span><br><span class="line">| <span class="type">Arith</span> <span class="keyword">of</span> operand * operand * arithop * operand <span class="comment">(* x := y + z *)</span></span><br><span class="line">| <span class="type">Load</span> <span class="keyword">of</span> operand * operand * <span class="built_in">int</span>               <span class="comment">(* x := *(y+i) *)</span></span><br><span class="line">| <span class="type">Store</span> <span class="keyword">of</span> operand * <span class="built_in">int</span> * operand              <span class="comment">(* *(x+i) := y *)</span></span><br><span class="line">| <span class="type">Call</span> <span class="keyword">of</span> operand                               <span class="comment">(* invoke f--result in R2 *)</span></span><br><span class="line">| <span class="type">Jump</span> <span class="keyword">of</span> label  <span class="comment">(* j L *)</span></span><br><span class="line">| <span class="type">If</span> <span class="keyword">of</span> operand * compareop * operand * label * label</span><br><span class="line">      <span class="comment">(* if x &lt; y then goto L1 else goto L2 *)</span></span><br><span class="line">| <span class="type">Return</span>  <span class="comment">(* return to caller -- result assumed in R2 *)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* basic blocks -- instead of capturing the structure of basic</span></span><br><span class="line"><span class="comment"> * blocks (as done in class), we just represent them as lists</span></span><br><span class="line"><span class="comment"> * of instructions where we assume that each block starts with a </span></span><br><span class="line"><span class="comment"> * Label and ends with either a Jump, If, or Return and that </span></span><br><span class="line"><span class="comment"> * there is no intervening Label, Jump, If, or Return. *)</span></span><br><span class="line"><span class="keyword">type</span> block = inst <span class="built_in">list</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">(* a function is a list of basic blocks -- the first block is</span></span><br><span class="line"><span class="comment"> * assumed to be the entry point to the function. *)</span></span><br><span class="line"><span class="keyword">type</span> func = block <span class="built_in">list</span></span><br><span class="line"></span><br><span class="line"><span class="comment">(* a program is a list of functions -- the function named main</span></span><br><span class="line"><span class="comment"> * is considered the entry point. *)</span></span><br><span class="line"><span class="keyword">type</span> program = func <span class="built_in">list</span></span><br></pre></td></tr></table></figure><h2 id="Build-Control-Flow-Graph"><a href="#Build-Control-Flow-Graph" class="headerlink" title="Build Control Flow Graph"></a>Build Control Flow Graph</h2><p>The second step would be to connect blocks of instructions together, based on the </p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;I am super busy, but I want to spend some time talking about how to write a compiler in ocaml that has liveness analysis, and can generate interference graph from CFG and liveness analysis, which is fundamental to doing correct, if not efficient, register allocation. &lt;/p&gt;
+&lt;style&gt;
+                /* css part */
+                .gr-card {
+
+                    --gr-header-width-proportion: 10%;
+                    --gr-footer-width-proportion: 10%;
+                    --gr-content-width-proportion: 80%;
+
+                    --gr-header-min-width: 80px;
+                    --gr-footer-min-width: 80px;
+
+                    --gr-card-element-margin: 6px 10px 6px 10px; /* header content footer*/
+
+                    display: flex;
+                    background-color: #fff;
+                    border-radius: 6px;
+                    overflow: hidden;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, .12);
+                    margin-bottom: 20px;
+                    vertical-align: middle;
+                    position: relative;
+                }
+
+                .gr-header {
+                    width: var(--gr-header-width-proportion);
+                    min-width: var(--gr-header-min-width);
+                    margin: var(--gr-card-element-margin);
+                    background-color: #fff;
+                    /* background-color: blueviolet; */
+                }
+
+                .gr-header img {
+                    width: 80px;
+                    height: 80px;
+                    position: relative;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    object-fit: cover;
+                    border-radius: 50%;
+                    margin: 0px;
+                }
+
+                .gr-content {
+                    width: var(--gr-content-width-proportion);
+                    margin: var(--gr-card-element-margin);
+                    background-color: #fff;
+                    text-align: left;
+                }
+
+                #gr-github-icon {
+                    font-size: 1.3rem;
+                }
+                .gr-fullname {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                }
+
+                .gr-fullname p {
+                    line-height: 2rem;
+                    margin: 10px 0px 0px 0px;
+                    padding: 0;
+                    font-size: .83rem;
+                    font-weight: bolder;
+                }
+
+                .gr-description {
+                    font-size: .8rem;
+                    line-height: 1.6rem;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                }
+
+                .gr-footer {
+                    width: var(--gr-footer-width-proportion);
+                    min-width: var(--gr-footer-min-width);
+                    margin: var(--gr-card-element-margin);
+                    display: flex;
+                    /* background-color: aqua; */
+                    background-color: #fff;
+                    position: relative;
+                    padding: 0px;
+                }
+
+                .gr-language-star {
+                    margin: auto auto 22px auto;
+                    text-align: center;
+                    opacity: 1;
+                }
+
+                .gr-language {
+                    font-size: .8rem;
+                    font-weight: 600;
+                    line-height: 2.2rem;
+                    color: #2070d3;
+                }
+
+                #gr-star-icon {
+                    font-size: .8rem;
+                    display: inherit;
+                }
+
+                .gr-card-toolbar{
+                    display:flex;
+                    width: 100%;
+                    height: 100%;
+
+                    position: absolute;
+
+                    opacity: 0;
+                    animation: fade-out;
+                    animation-duration: .4s;
+                    z-index: -1;
+                    /* background-color: #2070d3; */
+                }
+
+                .gr-repo-link {
+                    margin: auto;
+                }
+
+                #gr-repo-link-icon {
+                    font-size: 16px;
+                }
+                /* animation part */
+
+                @keyframes fade-in {
+                    0% {opacity: 0;}/*初始状态 透明度为0*/
+                    100% {opacity: 1;}/*结束状态 透明度为1*/
+                }
+
+                @keyframes fade-out {
+                    0% {opacity: 1;}/*初始状态 透明度为0*/
+                    100% {opacity: 0;}/*结束状态 透明度为1*/
+                }
+
+                .gr-card:hover .gr-language-star{
+                    opacity: 0;
+                    animation: fade-out;
+                    animation-duration: .3s;
+                }
+
+                .gr-card:hover .gr-card-toolbar{
+                    opacity: 1;
+                    animation: fade-in;
+                    animation-duration: .6s;
+                    z-index: 1;
+                }
+                &lt;/style&gt;
+
+                &lt;div class=&quot;gr-card&quot;&gt;
+                    &lt;div class=&quot;gr-header&quot;&gt;
+                        &lt;img src=&quot;https://avatars.githubusercontent.com/u/93311390?v=4&quot; alt=&quot;&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;gr-content&quot;&gt;
+                        &lt;div class=&quot;gr-fullname&quot;&gt;
+                            &lt;p&gt;&lt;i class=&quot;fab fa-github fa-lg&quot; aria-hidden=&quot;true&quot; id=&quot;gr-github-icon&quot;&gt;&lt;/i&gt; PeterYaoNYU/CompilerInOCaml&lt;/p&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;gr-description&quot;&gt;
+                            A compiler for a ML-ish Languange, with a ML-&gt;Scheme-&gt;C-&gt;CFG-&gt;MIPS Pipeline, Register Allocation and Garbage Collection.
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;gr-footer&quot;&gt;
+                        &lt;div class=&quot;gr-language-star&quot;&gt;
+                            &lt;span class=&quot;gr-language&quot;&gt;OCaml&lt;/span&gt;
+                            &lt;i class=&quot;far fa-star&quot; aria-hidden=&quot;true&quot; id=&#39;gr-star-icon&#39;&gt; 0&lt;/i&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;gr-card-toolbar&quot;&gt;
+                            &lt;div class=&quot;gr-repo-link&quot;&gt;
+                                &lt;a href=&quot;https://github.com/PeterYaoNYU/CompilerInOCaml&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;
+                                    title=&quot;Open in a new TAB&quot;&gt;
+                                    &lt;i class=&quot;fas fa-external-link-square-alt fa-lg&quot; aria-hidden=&quot;true&quot; style=&quot;color: black;&quot; id=&quot;gr-repo-link-icon&quot;&gt;&lt;/i&gt;
+                                &lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+&lt;p&gt;The Code can be found under the folder ps7, if not restructured after the writing of this post. &lt;/p&gt;
+&lt;p&gt;This is part of the NYU graduate level capstone project, with Prof. Joseph Tassarotti. &lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Compiler" scheme="http://peteryaonyu.github.io/tags/Compiler/"/>
+    
+  </entry>
   
   <entry>
     <title>[Compiler Construction in Ocaml] Hindley-Milner Type Inference System Implementation</title>
